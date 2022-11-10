@@ -19,6 +19,7 @@ import {
   TIMEOUT_LIKE_INFINITY,
 } from "./config";
 import { UniqueQueue } from "./uniqueQueue";
+import * as path from 'path';
 
 export default class LocalImagesPlugin extends Plugin {
   settings: ISettings;
@@ -29,7 +30,7 @@ export default class LocalImagesPlugin extends Plugin {
     // const content = await this.app.vault.read(file);
     let mediaRootDirectory = this.settings.mediaRootDirectory
     if(this.settings.mediaRootDirectoryBaseOnFile){
-      mediaRootDirectory = file.parent.path + "/" + this.settings.mediaRootDirectory.replace(/^(\/|\.\/)/,"")
+      mediaRootDirectory = path.join(this.settings.mediaRootDirectory, file.parent.path, file.basename);
     }
     const content = await this.app.vault.cachedRead(file);
 
